@@ -17,7 +17,7 @@ public class BlueLong extends LinearOpMode {
     Servo trigger;
     Servo tapeAngle;
 
-    //Hello
+    //hello
 
     @Override
     public void runOpMode() throws InterruptedException {
