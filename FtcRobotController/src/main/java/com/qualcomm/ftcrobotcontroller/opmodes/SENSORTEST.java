@@ -64,7 +64,9 @@ public class SENSORTEST extends OpMode {
      */
     @Override
     public void init() {
-
+        ODS = hardwareMap.opticalDistanceSensor.get("sensor_ods");
+        touchSensor = hardwareMap.touchSensor.get("sensor_touch");
+        colorSensor = hardwareMap.colorSensor.get("sensor_color");
     }
 
     @Override
