@@ -70,14 +70,12 @@ public class SENSORTEST extends OpMode {
     @Override
     public void loop() {
         double reflectance = ODS.getLightDetected();
-        Boolean touched = touchSensor.isPressed();
         double redv = colorSensor.red();
         double bluev = colorSensor.blue();
         double greenv = colorSensor.green();
 
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("Reflectance", "Reflectance Value:  " + reflectance);
-        telemetry.addData("Touch", "Touch Sensor: " + touched);
         telemetry.addData("Red", "Red Val: " + redv);
         telemetry.addData("Blue", "Blue Val: " + bluev);
         telemetry.addData("Green", "Green Val: " + greenv);
