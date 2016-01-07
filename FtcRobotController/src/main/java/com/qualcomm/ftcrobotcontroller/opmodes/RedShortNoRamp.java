@@ -13,7 +13,8 @@ public class RedShortNoRamp extends LinearOpMode {
     DcMotor motorRightB;
     DcMotor motorLeftA;
     DcMotor motorLeftB;
-    DcMotor tapeExt;
+    DcMotor tapeExt1;
+    DcMotor tapeExt2;
     Servo clawBody;
     Servo trigger;
     Servo tapeAngle;
@@ -26,7 +27,8 @@ public class RedShortNoRamp extends LinearOpMode {
         motorRightB = hardwareMap.dcMotor.get("motor_br");
         motorLeftA = hardwareMap.dcMotor.get("motor_fl");
         motorLeftB = hardwareMap.dcMotor.get("motor_bl");
-        tapeExt = hardwareMap.dcMotor.get("motor_ext");
+        tapeExt1 = hardwareMap.dcMotor.get("motor_ext1");
+        tapeExt2 = hardwareMap.dcMotor.get("motor_ext2");
         motorLeftA.setDirection(DcMotor.Direction.REVERSE);
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
 
@@ -127,10 +129,10 @@ public class RedShortNoRamp extends LinearOpMode {
 
         double maxVel=2;
 
-        tapeExt.setPower(-pow);
+        tapeExt1.setPower(-pow);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
-        tapeExt.setPower(0);
+        tapeExt1.setPower(0);
         sleep((long) (pause * 1000));
 
     }
@@ -138,14 +140,14 @@ public class RedShortNoRamp extends LinearOpMode {
     public void tapePull(double length, double pow, double pause) throws InterruptedException{
         double maxVel=2;
 
-        tapeExt.setPower(-pow);
+        tapeExt1.setPower(-pow);
         motorLeftA.setPower(pow);
         motorRightA.setPower(pow);
         motorLeftB.setPower(pow);
         motorRightB.setPower(pow);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
-        tapeExt.setPower(0);
+        tapeExt1.setPower(0);
         motorLeftA.setPower(0);
         motorRightA.setPower(0);
         motorLeftB.setPower(0);
