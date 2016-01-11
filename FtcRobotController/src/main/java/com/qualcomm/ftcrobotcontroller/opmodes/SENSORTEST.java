@@ -46,8 +46,8 @@ import com.qualcomm.robotcore.util.Range;
  */
 public class SENSORTEST extends OpMode {
 
-    OpticalDistanceSensor ODS;
-    TouchSensor touchSensor;
+    //OpticalDistanceSensor ODS;
+    //TouchSensor touchSensor;
     ColorSensor colorSensor;
 
     /**
@@ -64,20 +64,20 @@ public class SENSORTEST extends OpMode {
      */
     @Override
     public void init() {
-        ODS = hardwareMap.opticalDistanceSensor.get("sensor_ods");
-        touchSensor = hardwareMap.touchSensor.get("sensor_touch");
+        //ODS = hardwareMap.opticalDistanceSensor.get("sensor_ods");
+        //touchSensor = hardwareMap.touchSensor.get("sensor_touch");
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
     }
 
     @Override
     public void loop() {
-        double reflectance = ODS.getLightDetected();
+        //double reflectance = ODS.getLightDetected();
         double redv = colorSensor.red();
         double bluev = colorSensor.blue();
         double greenv = colorSensor.green();
 
         telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("Reflectance", "Reflectance Value:  " + reflectance);
+        //telemetry.addData("Reflectance", "Reflectance Value:  " + reflectance);
         telemetry.addData("Red", "Red Val: " + redv);
         telemetry.addData("Blue", "Blue Val: " + bluev);
         telemetry.addData("Green", "Green Val: " + greenv);
@@ -88,12 +88,6 @@ public class SENSORTEST extends OpMode {
 
     }
 
-
-    /*
-     * This method scales the joystick input so for low joystick values, the
-     * scaled value is less than linear.  This is to make it easier to drive
-     * the robot more precisely at slower speeds.
-     */
 
 
 }
