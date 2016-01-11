@@ -13,8 +13,6 @@ import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
-import javafx.scene.shape.Line;
-
 public class CS3  extends LinearOpMode{
     ColorSensor colorSensor;
 
@@ -25,17 +23,21 @@ public class CS3  extends LinearOpMode{
         waitOneFullHardwareCycle();
         waitForStart();
 
-        double redv = colorSensor.red();
-        double bluev = colorSensor.blue();
-        double greenv = colorSensor.green();
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F,0F,0F};
 
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
 
         while(opModeIsActive()) {
             telemetry.addData("Text", "*** Robot Data***");
+            Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
             //telemetry.addData("Reflectance", "Reflectance Value:  " + reflectance);
-            telemetry.addData("Red", "Red Val: " + redv);
-            telemetry.addData("Blue", "Blue Val: " + bluev);
-            telemetry.addData("Green", "Green Val: " + greenv);
+            telemetry.addData("Red", "Red Val: " + colorSensor.red());
+            telemetry.addData("Blue", "Blue Val: " + colorSensor.blue());
+            telemetry.addData("Green", "Green Val: " + colorSensor.green());
+
+            waitOneFullHardwareCycle();
         }
     }
 }
