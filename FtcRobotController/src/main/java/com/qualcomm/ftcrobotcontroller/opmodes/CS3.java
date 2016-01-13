@@ -24,11 +24,13 @@ public class CS3  extends LinearOpMode{
 
     ColorSensor colorSensor;
     OpticalDistanceSensor ODS;
+    TouchSensor touchSensor;
 
     @Override
     public void runOpMode() throws InterruptedException {
         colorSensor = hardwareMap.colorSensor.get("cs");
         ODS = hardwareMap.opticalDistanceSensor.get("ods");
+        touchSensor = hardwareMap.touchSensor.get("touch");
         colorSensor.enableLed(true);
         waitOneFullHardwareCycle();
         waitForStart();
@@ -47,6 +49,7 @@ public class CS3  extends LinearOpMode{
             telemetry.addData("Red", "Red Val: " + colorSensor.red());
             telemetry.addData("Blue", "Blue Val: " + colorSensor.blue());
             telemetry.addData("Green", "Green Val: " + colorSensor.green());
+            telemetry.addData("Touch?", "Touch?: " + touchSensor.isPressed());
 
             waitOneFullHardwareCycle();
         }
