@@ -134,6 +134,7 @@ public class BlueShort extends LinearOpMode {
         double maxVel=2;
 
         tapeExt.setPower(-pow);
+        sleep(1000);
         motorLeftA.setPower(pow);
         motorRightA.setPower(pow);
         motorLeftB.setPower(pow);

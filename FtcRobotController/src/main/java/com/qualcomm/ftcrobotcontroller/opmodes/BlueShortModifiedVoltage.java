@@ -58,10 +58,10 @@ public class BlueShortModifiedVoltage extends LinearOpMode {
         double voltAdj = 0;
 
         if (voltage<=.1){
-            voltAdj= 12/(66.8*voltage);
+            voltAdj= 14/(66.8*voltage);
         }
         if (voltage>.1){
-            voltAdj= 12/(12.051656/(1+2.464978*(Math.pow(2.71828, (voltage*(-11.2111*voltage))))));
+            voltAdj= 14/(12.051656/(1+2.464978*(Math.pow(2.71828, (voltage*(-11.2111*voltage))))));
         }
 
         motorLeftA.setPower(-pow);

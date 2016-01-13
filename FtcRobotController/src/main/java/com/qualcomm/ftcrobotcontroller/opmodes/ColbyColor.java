@@ -20,7 +20,6 @@ public class ColbyColor extends LinearOpMode {
     DcMotor motorLeftB;
     DcMotor tapeExt;
 
-    // this is a test for github
     Servo clawBody;
     Servo trigger;
     Servo tapeAngle;
