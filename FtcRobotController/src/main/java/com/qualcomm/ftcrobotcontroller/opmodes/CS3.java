@@ -33,6 +33,7 @@ public class CS3  extends LinearOpMode{
             telemetry.addData("Text", "*** Robot Data***");
             Color.RGBToHSV(colorSensor.red() * 8, colorSensor.green() * 8, colorSensor.blue() * 8, hsvValues);
             //telemetry.addData("Reflectance", "Reflectance Value:  " + reflectance);
+            telemetry.addData("Clear", "Clear Val: " + colorSensor.alpha());
             telemetry.addData("Red", "Red Val: " + colorSensor.red());
             telemetry.addData("Blue", "Blue Val: " + colorSensor.blue());
             telemetry.addData("Green", "Green Val: " + colorSensor.green());
