@@ -157,15 +157,9 @@ public class FourWheelDrive extends OpMode {
 
         tapeAngle.setPosition(tapePosition);
 
-        if(gamepad2.right_stick_y>0) {
-            tapeExt1.setPower(gamepad2.right_stick_y * .5);
-            tapeExt2.setPower(gamepad2.right_stick_y * .2);
-        }
 
-        if(gamepad2.right_stick_y<0) {
-            tapeExt1.setPower(gamepad2.right_stick_y * .2);
-            tapeExt2.setPower(gamepad2.right_stick_y * .5);
-        }
+        tapeExt1.setPower(gamepad2.right_stick_y * .8);
+        tapeExt2.setPower(gamepad2.right_stick_y * .2);
 
 
         if(gamepad1.x){
