@@ -63,9 +63,9 @@ public class RedShortNoODS extends LinearOpMode {
         waitForStart();
         drive(0, 1, .5);
         drive(.5, 1, .5);
-        turn(49, 1, .5);
+        turn(-49, 1, .5);
         drive(6.7, 1, .5);
-        turn(54, 1, .5);
+        turn(-54, 1, .5);
         //drive(.75, 1, .5);
         colorPress();
 
