@@ -29,9 +29,11 @@ public class FourWheelDrive extends OpMode {
     DcMotor tapeExt1;
     DcMotor tapeExt2;
     Servo clawBody;
-    Servo trigger;
+    Servo trigger1;
+    Servo trigger2;
     Servo tapeAngle;
     Servo plow;
+    Servo presser;
 
     final static double tapeDelta = .0075;
     double tapePosition = 0;
@@ -79,12 +81,16 @@ public class FourWheelDrive extends OpMode {
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
 
         clawBody = hardwareMap.servo.get("servo_1");
-        trigger = hardwareMap.servo.get("servo_2");
-        tapeAngle = hardwareMap.servo.get("servo_3");
-        plow = hardwareMap.servo.get("servo_4");
+        trigger1 = hardwareMap.servo.get("servo_2");
+        trigger2 = hardwareMap.servo.get("servo_3");
+        tapeAngle = hardwareMap.servo.get("servo_4");
+        plow = hardwareMap.servo.get("servo_5");
+        presser = hardwareMap.servo.get("servo_6");
 
 
-        trigger.setPosition(.5);
+
+        trigger1.setPosition(.5);
+        trigger2.setPosition(.5);
         clawBody.setPosition(1);
 
     }
@@ -163,15 +169,16 @@ public class FourWheelDrive extends OpMode {
 
 
         if(gamepad1.x){
-            trigger.setPosition(1);
+            trigger1.setPosition(1);
         }
 
         if(gamepad1.y){
-            trigger.setPosition(.5);
+            trigger1.setPosition(.5);
+            trigger2.setPosition(.5);
         }
 
         if(gamepad1.b){
-            trigger.setPosition(0);
+            trigger2.setPosition(1);
         }
 
         if(gamepad2.right_bumper){
