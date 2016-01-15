@@ -183,7 +183,7 @@ public class FourWheelDrive extends OpMode {
         }
 
         if(gamepad1.right_trigger>0){
-            plow.setPosition(1);
+            plow.setPosition(.6);
         }
 
         if(gamepad1.left_trigger>0){
@@ -200,6 +200,7 @@ public class FourWheelDrive extends OpMode {
         telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
         telemetry.addData("Voltage: ", + this.hardwareMap.voltageSensor.iterator().next().getVoltage());
+
 
     }
 
