@@ -2,7 +2,6 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -26,7 +25,7 @@ public class FourWheelDrive extends OpMode {
     DcMotor motorRightB;
     DcMotor motorLeftA;
     DcMotor motorLeftB;
-    DcMotor tapeExt1;
+    DcMotor tapeMain;
     DcMotor tapeExt2;
     Servo clawBody;
     Servo trigger1;
@@ -75,7 +74,7 @@ public class FourWheelDrive extends OpMode {
         motorRightB = hardwareMap.dcMotor.get("motor_br");
         motorLeftA = hardwareMap.dcMotor.get("motor_fl");
         motorLeftB = hardwareMap.dcMotor.get("motor_bl");
-        tapeExt1 = hardwareMap.dcMotor.get("motor_ext1");
+        tapeMain = hardwareMap.dcMotor.get("motor_ext1");
         tapeExt2 = hardwareMap.dcMotor.get("motor_ext2");
         motorLeftA.setDirection(DcMotor.Direction.REVERSE);
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
@@ -159,7 +158,7 @@ public class FourWheelDrive extends OpMode {
         tapeAngle.setPosition(tapePosition);
 
 
-        tapeExt1.setPower(gamepad2.right_stick_y * .5);
+        tapeMain.setPower(gamepad2.right_stick_y * .5);
         if(gamepad2.right_stick_y<0) {
             tapeExt2.setPower(gamepad2.right_stick_y * .075);
         }
