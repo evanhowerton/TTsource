@@ -18,11 +18,14 @@ public class BlueShortNoODS extends LinearOpMode {
     DcMotor motorRightB;
     DcMotor motorLeftA;
     DcMotor motorLeftB;
-    DcMotor tapeExt;
+    DcMotor tapeExt1;
+    DcMotor tapeExt2;
 
     Servo clawBody;
-    Servo trigger;
+    Servo trigger1;
+    Servo trigger2;
     Servo tapeAngle;
+    Servo plow;
     Servo presser;
 
     ColorSensor colorSensor;
@@ -35,20 +38,24 @@ public class BlueShortNoODS extends LinearOpMode {
         motorRightB = hardwareMap.dcMotor.get("motor_br");
         motorLeftA = hardwareMap.dcMotor.get("motor_fl");
         motorLeftB = hardwareMap.dcMotor.get("motor_bl");
-        tapeExt = hardwareMap.dcMotor.get("motor_ext");
+        tapeExt1 = hardwareMap.dcMotor.get("motor_ext1");
+        tapeExt2 = hardwareMap.dcMotor.get("motor_ext2");
         motorLeftA.setDirection(DcMotor.Direction.REVERSE);
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
 
         clawBody = hardwareMap.servo.get("servo_1");
-        trigger = hardwareMap.servo.get("servo_2");
-        tapeAngle = hardwareMap.servo.get("servo_3");
-        presser = hardwareMap.servo.get("servo_4");
+        trigger1 = hardwareMap.servo.get("servo_2");
+        trigger2 = hardwareMap.servo.get("servo_3");
+        tapeAngle = hardwareMap.servo.get("servo_4");
+        plow = hardwareMap.servo.get("servo_5");
+        presser = hardwareMap.servo.get("servo_6");
 
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
 
 
 
-        trigger.setPosition(.5);
+        trigger1.setPosition(.5);
+        trigger2.setPosition(.5);
         clawBody.setPosition(1);
 
 
@@ -71,10 +78,10 @@ public class BlueShortNoODS extends LinearOpMode {
 
         double maxVel= 2.31;
 
-        motorLeftA.setPower(-pow);
-        motorRightA.setPower(-pow);
-        motorLeftB.setPower(-pow);
-        motorRightB.setPower(-pow);
+        motorLeftA.setPower(pow);
+        motorRightA.setPower(pow);
+        motorLeftB.setPower(pow);
+        motorRightB.setPower(pow);
 
         sleep((long) (1000 * (Math.abs(dist / (maxVel * pow)))));
 
@@ -91,17 +98,17 @@ public class BlueShortNoODS extends LinearOpMode {
         double period = 3.2;
 
         if(theta>0){
-            motorLeftA.setPower(-pow);
-            motorRightA.setPower(pow);
-            motorLeftB.setPower(-pow);
-            motorRightB.setPower(pow);
-        }
-
-        if(theta<0){
             motorLeftA.setPower(pow);
             motorRightA.setPower(-pow);
             motorLeftB.setPower(pow);
             motorRightB.setPower(-pow);
+        }
+
+        if(theta<0){
+            motorLeftA.setPower(-pow);
+            motorRightA.setPower(pow);
+            motorLeftB.setPower(-pow);
+            motorRightB.setPower(pow);
         }
 
         sleep((long) (1000 * Math.abs((theta / 360) * period)));
@@ -139,10 +146,12 @@ public class BlueShortNoODS extends LinearOpMode {
 
         double maxVel=2;
 
-        tapeExt.setPower(-pow);
+        tapeExt1.setPower(-pow);
+        tapeExt2.setPower(-pow*.25);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
-        tapeExt.setPower(0);
+        tapeExt1.setPower(0);
+        tapeExt2.setPower(0);
         sleep((long) (pause * 1000));
 
     }
@@ -150,14 +159,18 @@ public class BlueShortNoODS extends LinearOpMode {
     public void tapePull(double length, double pow, double pause) throws InterruptedException{
         double maxVel=2;
 
-        tapeExt.setPower(-pow);
+        tapeExt1.setPower(-pow);
+        tapeExt2.setPower(-pow*.25);
+        sleep(1500);
+
         motorLeftA.setPower(pow);
         motorRightA.setPower(pow);
         motorLeftB.setPower(pow);
         motorRightB.setPower(pow);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
-        tapeExt.setPower(0);
+        tapeExt1.setPower(0);
+        tapeExt2.setPower(0);
         motorLeftA.setPower(0);
         motorRightA.setPower(0);
         motorLeftB.setPower(0);
@@ -175,11 +188,11 @@ public class BlueShortNoODS extends LinearOpMode {
     }
 
     public void blueRamp() throws InterruptedException {
-        drive(1, -1, .5);
-        turn(-50, 1, .5);
-        drive(2.4, -1, .5);
-        turn(92, 1, .5);
-        drive(3.25, 1, .5);
+        drive(1, 1, .5);
+        turn(-50, -1, .5);
+        drive(2.4, 1, .5);
+        turn(92, -1, .5);
+        drive(3.25, -1, .5);
 
         setAngle(60.0, .5);
         tapeExt(3, 1, 1.5);

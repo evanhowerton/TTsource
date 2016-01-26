@@ -89,9 +89,10 @@ public class FourWheelDrive extends OpMode {
 
 
 
-        trigger1.setPosition(.5);
-        trigger2.setPosition(.5);
+        trigger1.setPosition(1);
+        trigger2.setPosition(1);
         clawBody.setPosition(1);
+        presser.setPosition(.75);
 
     }
 
@@ -158,21 +159,25 @@ public class FourWheelDrive extends OpMode {
         tapeAngle.setPosition(tapePosition);
 
 
-        tapeExt1.setPower(gamepad2.right_stick_y * .8);
-        tapeExt2.setPower(gamepad2.right_stick_y * .2);
-
-
-        if(gamepad1.x){
-            trigger1.setPosition(1);
+        tapeExt1.setPower(gamepad2.right_stick_y * .5);
+        if(gamepad2.right_stick_y<0) {
+            tapeExt2.setPower(gamepad2.right_stick_y * .075);
         }
-
-        if(gamepad1.y){
-            trigger1.setPosition(.5);
-            trigger2.setPosition(.5);
+        if(gamepad2.right_stick_y>0) {
+            tapeExt2.setPower(gamepad2.right_stick_y * .125);
         }
 
         if(gamepad1.b){
+            trigger1.setPosition(0);
+        }
+
+        if(gamepad1.y){
+            trigger1.setPosition(1);
             trigger2.setPosition(1);
+        }
+
+        if(gamepad1.x){
+            trigger2.setPosition(0);
         }
 
         if(gamepad2.right_bumper){
@@ -200,7 +205,7 @@ public class FourWheelDrive extends OpMode {
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
-        telemetry.addData("Voltage: ", + this.hardwareMap.voltageSensor.iterator().next().getVoltage());
+        //telemetry.addData("Voltage: ", + this.hardwareMap.voltageSensor.iterator().next().getVoltage());
 
 
     }
