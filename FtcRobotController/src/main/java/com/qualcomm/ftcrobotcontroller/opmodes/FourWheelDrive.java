@@ -141,9 +141,9 @@ public class FourWheelDrive extends OpMode {
         }
         else {
             motorRightA.setPower(right);
-            motorRightB.setPower(right);
+            motorRightB.setPower(.8181*right);
             motorLeftA.setPower(left);
-            motorLeftB.setPower(left);
+            motorLeftB.setPower(.8181*left);
         }
 
         if(gamepad2.dpad_up){
