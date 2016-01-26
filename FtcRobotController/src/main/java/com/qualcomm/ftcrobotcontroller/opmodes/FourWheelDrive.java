@@ -34,7 +34,7 @@ public class FourWheelDrive extends OpMode {
     Servo plow;
     Servo presser;
 
-    final static double tapeDelta = .0075;
+    final static double tapeDelta = .0025;
     double tapePosition = 0;
 
 
@@ -88,7 +88,7 @@ public class FourWheelDrive extends OpMode {
 
 
 
-        trigger1.setPosition(1);
+        trigger1.setPosition(0);
         trigger2.setPosition(1);
         dropper.setPosition(1);
         presser.setPosition(.75);
@@ -158,12 +158,15 @@ public class FourWheelDrive extends OpMode {
         tapeAngle.setPosition(tapePosition);
 
 
-        tapeMain.setPower(gamepad2.right_stick_y * .5);
+        tapeMain.setPower(gamepad2.right_stick_y * -.5);
         if(gamepad2.right_stick_y<0) {
             tapeExt2.setPower(gamepad2.right_stick_y * .075);
         }
         if(gamepad2.right_stick_y>0) {
             tapeExt2.setPower(gamepad2.right_stick_y * .125);
+        }
+        if(gamepad2.right_stick_y==0) {
+            tapeExt2.setPower(gamepad2.right_stick_y * 0);
         }
 
         if(gamepad1.b){
@@ -225,10 +228,10 @@ public class FourWheelDrive extends OpMode {
 
     double scaleInput(double dVal)  {
         if(dVal>0) {
-            dVal = .4 * (Math.pow(2.71828, (dVal * .4)) - 1);
+            dVal = .8 * (Math.pow(2.71828, (dVal * .4)) - 1);
         }
         if(dVal<0) {
-            dVal = -.4 * (Math.pow(2.71828, (dVal * -.4)) - 1);
+            dVal = -.8 * (Math.pow(2.71828, (dVal * -.4)) - 1);
         }
 
         return dVal;
