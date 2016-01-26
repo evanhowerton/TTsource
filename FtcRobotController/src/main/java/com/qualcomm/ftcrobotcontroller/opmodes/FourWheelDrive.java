@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * TeleOp Mode
@@ -19,7 +20,7 @@ public class FourWheelDrive extends OpMode {
      */
     // TETRIX VALUES.
 
-
+    ColorSensor colorSensor;
 
     DcMotor motorRightA;
     DcMotor motorRightB;
@@ -88,7 +89,8 @@ public class FourWheelDrive extends OpMode {
 
 
 
-        trigger1.setPosition(0);
+
+        trigger1.setPosition(1);
         trigger2.setPosition(1);
         dropper.setPosition(1);
         presser.setPosition(.75);
@@ -158,12 +160,12 @@ public class FourWheelDrive extends OpMode {
         tapeAngle.setPosition(tapePosition);
 
 
-        tapeMain.setPower(gamepad2.right_stick_y * -.5);
+        tapeMain.setPower(gamepad2.right_stick_y * -1);
         if(gamepad2.right_stick_y<0) {
-            tapeExt2.setPower(gamepad2.right_stick_y * .075);
+            tapeExt2.setPower(gamepad2.right_stick_y * .15);
         }
         if(gamepad2.right_stick_y>0) {
-            tapeExt2.setPower(gamepad2.right_stick_y * .125);
+            tapeExt2.setPower(gamepad2.right_stick_y * .25);
         }
         if(gamepad2.right_stick_y==0) {
             tapeExt2.setPower(gamepad2.right_stick_y * 0);
