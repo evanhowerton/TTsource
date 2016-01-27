@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 
@@ -88,7 +89,6 @@ public class FourWheelDrive extends OpMode {
         presser = hardwareMap.servo.get("servo_6");
 
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
-
 
         trigger1.setPosition(1);
         trigger2.setPosition(1);
@@ -204,8 +204,6 @@ public class FourWheelDrive extends OpMode {
         telemetry.addData("Red:", colorSensor.red());
         telemetry.addData("Blue:", colorSensor.blue());
         telemetry.addData("Green:", colorSensor.green());
-        //telemetry.addData("Voltage: ", + this.hardwareMap.voltageSensor.iterator().next().getVoltage());
-
 
     }
 
@@ -224,14 +222,25 @@ public class FourWheelDrive extends OpMode {
      */
 
     double scaleInput(double dVal)  {
-        if(dVal>0) {
-            dVal = .6 * (Math.pow(2.71828, (dVal * .4)) - 1);
+
+        if(gamepad1.a){
+            if (dVal > 0) {
+                dVal = .2 * (Math.pow(2.71828, (dVal * .4)) - 1);
+            }
+            if (dVal < 0) {
+                dVal = -.2 * (Math.pow(2.71828, (dVal * -.4)) - 1);
+            }
         }
-        if(dVal<0) {
-            dVal = -.6 * (Math.pow(2.71828, (dVal * -.4)) - 1);
+
+        else{
+            if (dVal > 0) {
+                dVal = .6 * (Math.pow(2.71828, (dVal * .4)) - 1);
+            }
+            if (dVal < 0) {
+                dVal = -.6 * (Math.pow(2.71828, (dVal * -.4)) - 1);
+            }
         }
 
         return dVal;
     }
-//test
 }
