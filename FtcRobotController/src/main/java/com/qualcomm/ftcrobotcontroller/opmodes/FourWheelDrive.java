@@ -87,7 +87,7 @@ public class FourWheelDrive extends OpMode {
         plow = hardwareMap.servo.get("servo_5");
         presser = hardwareMap.servo.get("servo_6");
 
-
+        colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
 
         trigger1.setPosition(1);
@@ -201,6 +201,9 @@ public class FourWheelDrive extends OpMode {
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+        telemetry.addData("Red:", colorSensor.red());
+        telemetry.addData("Blue:", colorSensor.blue());
+        telemetry.addData("Green:", colorSensor.green());
         //telemetry.addData("Voltage: ", + this.hardwareMap.voltageSensor.iterator().next().getVoltage());
 
 
