@@ -134,19 +134,11 @@ public class FourWheelDrive extends OpMode {
         right = (float)scaleInput(right);
         left =  (float)scaleInput(left);
 
-        // changes direction of motors
-        if(gamepad1.a) {
-            motorRightA.setPower(left);
-            motorRightB.setPower(left);
-            motorLeftA.setPower(right);
-            motorLeftB.setPower(right);
-        }
-        else {
-            motorRightA.setPower(right);
-            motorRightB.setPower(.8181*right);
-            motorLeftA.setPower(left);
-            motorLeftB.setPower(.8181*left);
-        }
+        // sets value to motors
+        motorRightA.setPower(right);
+        motorRightB.setPower(.8181*right);
+        motorLeftA.setPower(left);
+        motorLeftB.setPower(.8181*left);
 
         if(gamepad2.dpad_up){
             tapePosition += tapeDelta;
@@ -230,10 +222,10 @@ public class FourWheelDrive extends OpMode {
 
     double scaleInput(double dVal)  {
         if(dVal>0) {
-            dVal = .8 * (Math.pow(2.71828, (dVal * .4)) - 1);
+            dVal = .6 * (Math.pow(2.71828, (dVal * .4)) - 1);
         }
         if(dVal<0) {
-            dVal = -.8 * (Math.pow(2.71828, (dVal * -.4)) - 1);
+            dVal = -.6 * (Math.pow(2.71828, (dVal * -.4)) - 1);
         }
 
         return dVal;
