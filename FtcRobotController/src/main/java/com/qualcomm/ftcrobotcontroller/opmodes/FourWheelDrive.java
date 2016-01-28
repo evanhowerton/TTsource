@@ -139,6 +139,7 @@ public class FourWheelDrive extends OpMode {
         motorRightB.setPower(.8181*right);
         motorLeftA.setPower(left);
         motorLeftB.setPower(.8181*left);
+        colorSensor.enableLed(false);
 
         if(gamepad2.dpad_up){
             tapePosition += tapeDelta;
