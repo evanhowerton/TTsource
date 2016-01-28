@@ -90,7 +90,7 @@ public class FourWheelDrive extends OpMode {
 
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
-        trigger1.setPosition(1);
+        trigger1.setPosition(0);
         trigger2.setPosition(1);
         dropper.setPosition(1);
         presser.setPosition(.75);
@@ -154,7 +154,7 @@ public class FourWheelDrive extends OpMode {
 
         tapeMain.setPower(gamepad2.right_stick_y * -1);
         if(gamepad2.right_stick_y<0) {
-            tapeExt2.setPower(gamepad2.right_stick_y * .15);
+            tapeExt2.setPower(gamepad2.right_stick_y * .1);
         }
         if(gamepad2.right_stick_y>0) {
             tapeExt2.setPower(gamepad2.right_stick_y * .25);
@@ -192,7 +192,7 @@ public class FourWheelDrive extends OpMode {
             plow.setPosition(0);
         }
 
-		/*c
+		/*
 		 * Send telemetry data back to driver station. Note that if we are using
 		 * a legacy NXT-compatible motor controller, then the getPower() method
 		 * will return a null value. The legacy NXT-compatible motor controllers
@@ -225,19 +225,19 @@ public class FourWheelDrive extends OpMode {
 
         if(gamepad1.a){
             if (dVal > 0) {
-                dVal = .2 * (Math.pow(2.71828, (dVal * .4)) - 1);
+                dVal = .4 * (Math.pow(2.71828, (dVal * .4)) - 1);
             }
             if (dVal < 0) {
-                dVal = -.2 * (Math.pow(2.71828, (dVal * -.4)) - 1);
+                dVal = -.4 * (Math.pow(2.71828, (dVal * -.4)) - 1);
             }
         }
 
         else{
             if (dVal > 0) {
-                dVal = .6 * (Math.pow(2.71828, (dVal * .4)) - 1);
+                dVal = .8 * (Math.pow(2.71828, (dVal * .4)) - 1);
             }
             if (dVal < 0) {
-                dVal = -.6 * (Math.pow(2.71828, (dVal * -.4)) - 1);
+                dVal = -.8 * (Math.pow(2.71828, (dVal * -.4)) - 1);
             }
         }
 
