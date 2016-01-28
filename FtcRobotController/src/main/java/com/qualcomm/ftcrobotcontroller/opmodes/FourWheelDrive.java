@@ -185,7 +185,7 @@ public class FourWheelDrive extends OpMode {
         }
 
         if(gamepad1.right_trigger>0){
-            plow.setPosition(.6);
+            plow.setPosition(.5);
         }
 
         if(gamepad1.left_trigger>0){
@@ -198,6 +198,12 @@ public class FourWheelDrive extends OpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
+
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F,0F,0F};
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
         telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
