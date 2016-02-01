@@ -1,23 +1,43 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+/**
+ * Created by colbychance on 1/7/16.
+ */
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.I2cDevice;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
-public class BlueLongNoRamp extends LinearOpMode {
+public class BlueShortEncoders extends LinearOpMode {
+
     DcMotor motorRightA;
     DcMotor motorRightB;
     DcMotor motorLeftA;
     DcMotor motorLeftB;
-    DcMotor tapeExt;
-    Servo clawBody;
-    Servo trigger;
-    Servo tapeAngle;
+    DcMotor tapeExt1;
+    DcMotor tapeExt2;
 
+    Servo clawBody;
+    Servo trigger1;
+    Servo trigger2;
+    Servo tapeAngle;
+    Servo presser;
+
+    ColorSensor colorSensor;
+
+    final static int ENCODER_CPR = 1440;
+    final static double GEAR_RATIO = 1;
+    final static int WHEEL_DIAMETER = 3;
+    final static int DISTANCE = 24;
+
+    final static double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
+    final static double ROTATIONS = DISTANCE / CIRCUMFERENCE;
+    final static double COUNTS = ENCODER_CPR * ROTATIONS * GEAR_RATIO;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,50 +46,61 @@ public class BlueLongNoRamp extends LinearOpMode {
         motorRightB = hardwareMap.dcMotor.get("motor_br");
         motorLeftA = hardwareMap.dcMotor.get("motor_fl");
         motorLeftB = hardwareMap.dcMotor.get("motor_bl");
-        tapeExt = hardwareMap.dcMotor.get("motor_ext");
+        tapeExt1 = hardwareMap.dcMotor.get("motor_ext1");
+        tapeExt2 = hardwareMap.dcMotor.get("motor_ext2");
         motorLeftA.setDirection(DcMotor.Direction.REVERSE);
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
 
+        motorLeftA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+
         clawBody = hardwareMap.servo.get("servo_1");
-        trigger = hardwareMap.servo.get("servo_2");
-        tapeAngle = hardwareMap.servo.get("servo_3");
+        trigger1 = hardwareMap.servo.get("servo_2");
+        trigger2 = hardwareMap.servo.get("servo_3");
+        tapeAngle = hardwareMap.servo.get("servo_4");
+        presser = hardwareMap.servo.get("servo_5");
+
+        colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
 
-        trigger.setPosition(.5);
+
+        trigger1.setPosition(.5);
+        trigger2.setPosition(.5);
         clawBody.setPosition(1);
 
 
         // Wait for the start button to be pressed
         waitForStart();
-        drive(0, 1, 10);
+        /*drive(0, 1, .5);
         drive(.5, 1, .5);
-        turn(-48, 1, .5);
-        drive(8, 1, .5);
-        turn(-52, 1, .5);
-        //drive(.25, 1, .5);
+        turn(49, 1, .5);
+        drive(6.7, 1, .5);
+        turn(54, 1, .5);
+        //drive(.75, 1, .5);
+        colorPress();
+
+
         claw(.5);
-        drive(.25, -1, .5);
-        turn(-92, 1, .5);
-        drive(1.5, -1, .5);
-
-
+        blueRamp();
+        */
+        setAngle(90,.5);
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
 
-        double maxVel= 2.31;
+        motorLeftA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
 
-        motorLeftA.setPower(-pow);
-        motorRightA.setPower(-pow);
-        motorLeftB.setPower(-pow);
-        motorRightB.setPower(-pow);
+        motorLeftA.setTargetPosition((int)COUNTS);
+        motorRightA.setTargetPosition((int) COUNTS);
 
-        sleep((long) (1000 * (Math.abs(dist / (maxVel * pow)))));
+        motorLeftA.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorRightA.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
-        motorLeftA.setPower(0);
-        motorRightA.setPower(0);
-        motorLeftB.setPower(0);
-        motorRightB.setPower(0);
+        motorLeftA.setPower(pow);
+        motorRightA.setPower(pow);
+        motorLeftB.setPower(pow);
+
 
         sleep((long) (pause * 1000));
     }
@@ -79,17 +110,17 @@ public class BlueLongNoRamp extends LinearOpMode {
         double period = 3.2;
 
         if(theta>0){
-            motorLeftA.setPower(-pow);
-            motorRightA.setPower(pow);
-            motorLeftB.setPower(-pow);
-            motorRightB.setPower(pow);
-        }
-
-        if(theta<0){
             motorLeftA.setPower(pow);
             motorRightA.setPower(-pow);
             motorLeftB.setPower(pow);
             motorRightB.setPower(-pow);
+        }
+
+        if(theta<0){
+            motorLeftA.setPower(-pow);
+            motorRightA.setPower(pow);
+            motorLeftB.setPower(-pow);
+            motorRightB.setPower(pow);
         }
 
         sleep((long) (1000 * Math.abs((theta / 360) * period)));
@@ -127,10 +158,12 @@ public class BlueLongNoRamp extends LinearOpMode {
 
         double maxVel=2;
 
-        tapeExt.setPower(-pow);
+        tapeExt1.setPower(pow*-1);
+        tapeExt2.setPower(pow*.25);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
-        tapeExt.setPower(0);
+        tapeExt1.setPower(0);
+        tapeExt2.setPower(0);
         sleep((long) (pause * 1000));
 
     }
@@ -138,14 +171,18 @@ public class BlueLongNoRamp extends LinearOpMode {
     public void tapePull(double length, double pow, double pause) throws InterruptedException{
         double maxVel=2;
 
-        tapeExt.setPower(-pow);
+        tapeExt1.setPower(pow);
+        tapeExt2.setPower(pow*-.15);
+        sleep(1500);
+
         motorLeftA.setPower(pow);
         motorRightA.setPower(pow);
         motorLeftB.setPower(pow);
         motorRightB.setPower(pow);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
-        tapeExt.setPower(0);
+        tapeExt1.setPower(0);
+        tapeExt2.setPower(0);
         motorLeftA.setPower(0);
         motorRightA.setPower(0);
         motorLeftB.setPower(0);
@@ -163,16 +200,26 @@ public class BlueLongNoRamp extends LinearOpMode {
     }
 
     public void blueRamp() throws InterruptedException {
-        drive(1, -1, .5);
-        turn(50, 1, .5);
-        drive(2.4, -1, .5);
-        turn(-90, 1, .5);
-        drive(3.5, 1, 1);
+        drive(1, 1, .5);
+        turn(-50, -1, .5);
+        drive(2.4, 1, .5);
+        turn(92, -1, .5);
+        drive(3.25, -1, .5);
 
         setAngle(60.0, .5);
-        tapeExt(2.5,1,1.5);
-        setAngle(0.0,2);
-        tapePull(5,-.5,.5);
+        tapeExt(3, 1, 1.5);
+        setAngle(0.0, 2);
+        tapePull(4.5, -.5, .5);
+    }
+
+    public void colorPress() throws InterruptedException {
+
+        if (colorSensor.red() > colorSensor.blue()) {
+            presser.setPosition(.25);
+        }
+        else if(colorSensor.blue() > colorSensor.blue()) {
+            presser.setPosition(.75);
+        }
     }
 
 }

@@ -33,7 +33,6 @@ public class FourWheelDrive extends OpMode {
     Servo trigger1;
     Servo trigger2;
     Servo tapeAngle;
-    Servo plow;
     Servo presser;
 
     final static double tapeDelta = .0025;
@@ -85,8 +84,7 @@ public class FourWheelDrive extends OpMode {
         trigger1 = hardwareMap.servo.get("servo_2");
         trigger2 = hardwareMap.servo.get("servo_3");
         tapeAngle = hardwareMap.servo.get("servo_4");
-        plow = hardwareMap.servo.get("servo_5");
-        presser = hardwareMap.servo.get("servo_6");
+        presser = hardwareMap.servo.get("servo_5");
 
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
@@ -139,7 +137,7 @@ public class FourWheelDrive extends OpMode {
         motorRightB.setPower(.8181*right);
         motorLeftA.setPower(left);
         motorLeftB.setPower(.8181*left);
-        colorSensor.enableLed(false);
+        colorSensor.enableLed(true);
 
         if(gamepad2.dpad_up){
             tapePosition += tapeDelta;
@@ -154,11 +152,11 @@ public class FourWheelDrive extends OpMode {
 
 
         tapeMain.setPower(gamepad2.right_stick_y * -1);
-        if(gamepad2.right_stick_y<0) {
+        if(gamepad2.right_stick_y>0) {
             tapeExt2.setPower(gamepad2.right_stick_y * .1);
         }
-        if(gamepad2.right_stick_y>0) {
-            tapeExt2.setPower(gamepad2.right_stick_y * .25);
+        if(gamepad2.right_stick_y<0) {
+            tapeExt2.setPower(gamepad2.right_stick_y * .2);
         }
         if(gamepad2.right_stick_y==0) {
             tapeExt2.setPower(gamepad2.right_stick_y * 0);
@@ -185,13 +183,7 @@ public class FourWheelDrive extends OpMode {
             dropper.setPosition(1);
         }
 
-        if(gamepad1.right_trigger>0){
-            plow.setPosition(.5);
-        }
 
-        if(gamepad1.left_trigger>0){
-            plow.setPosition(0);
-        }
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using

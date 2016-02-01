@@ -25,7 +25,6 @@ public class BlueShortNoODS extends LinearOpMode {
     Servo trigger1;
     Servo trigger2;
     Servo tapeAngle;
-    Servo plow;
     Servo presser;
 
     ColorSensor colorSensor;
@@ -47,10 +46,9 @@ public class BlueShortNoODS extends LinearOpMode {
         trigger1 = hardwareMap.servo.get("servo_2");
         trigger2 = hardwareMap.servo.get("servo_3");
         tapeAngle = hardwareMap.servo.get("servo_4");
-        plow = hardwareMap.servo.get("servo_5");
-        presser = hardwareMap.servo.get("servo_6");
+        presser = hardwareMap.servo.get("servo_5");
 
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
 
 
@@ -61,7 +59,7 @@ public class BlueShortNoODS extends LinearOpMode {
 
         // Wait for the start button to be pressed
         waitForStart();
-        drive(0, 1, .5);
+        /*drive(0, 1, .5);
         drive(.5, 1, .5);
         turn(49, 1, .5);
         drive(6.7, 1, .5);
@@ -69,9 +67,11 @@ public class BlueShortNoODS extends LinearOpMode {
         //drive(.75, 1, .5);
         colorPress();
 
+
         claw(.5);
         blueRamp();
-
+        */
+        setAngle(90,.5);
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
@@ -146,8 +146,8 @@ public class BlueShortNoODS extends LinearOpMode {
 
         double maxVel=2;
 
-        tapeExt1.setPower(-pow);
-        tapeExt2.setPower(-pow*.25);
+        tapeExt1.setPower(pow*-1);
+        tapeExt2.setPower(pow*.25);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
         tapeExt1.setPower(0);
@@ -159,8 +159,8 @@ public class BlueShortNoODS extends LinearOpMode {
     public void tapePull(double length, double pow, double pause) throws InterruptedException{
         double maxVel=2;
 
-        tapeExt1.setPower(-pow);
-        tapeExt2.setPower(-pow*.25);
+        tapeExt1.setPower(pow);
+        tapeExt2.setPower(pow*-.15);
         sleep(1500);
 
         motorLeftA.setPower(pow);

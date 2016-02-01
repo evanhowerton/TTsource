@@ -25,7 +25,6 @@ public class RedShortNoODS extends LinearOpMode {
     Servo trigger1;
     Servo trigger2;
     Servo tapeAngle;
-    Servo plow;
     Servo presser;
 
     ColorSensor colorSensor;
@@ -47,8 +46,7 @@ public class RedShortNoODS extends LinearOpMode {
         trigger1 = hardwareMap.servo.get("servo_2");
         trigger2 = hardwareMap.servo.get("servo_3");
         tapeAngle = hardwareMap.servo.get("servo_4");
-        plow = hardwareMap.servo.get("servo_5");
-        presser = hardwareMap.servo.get("servo_6");
+        presser = hardwareMap.servo.get("servo_5");
 
         colorSensor = hardwareMap.colorSensor.get("sensor_color");
 
