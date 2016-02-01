@@ -81,7 +81,8 @@ public class EncodersTest extends LinearOpMode {
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
-        double fcount = dist*(PULSE/FRONT_CIRCUMFERENCE);
+        // enter dist in FEET
+        double fcount = PULSE*((dist*12)/FRONT_CIRCUMFERENCE);
         DcMotor frontMotors[] = {motorLeftA, motorRightA};
         for(DcMotor x: frontMotors) {
             x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
@@ -97,7 +98,7 @@ public class EncodersTest extends LinearOpMode {
         while(motorLeftA.isBusy()){
             motorLeftB.setPower(pow);
             motorRightB.setPower(pow);
-            telemetry.addData("Distance: ", (motorLeftA.getCurrentPosition()/1440)*FRONT_CIRCUMFERENCE);
+            telemetry.addData("Distance: ", ((motorLeftA.getCurrentPosition()/PULSE)*FRONT_CIRCUMFERENCE)/12 + " of " + dist + "ft" + " (" + (double)motorLeftA.getCurrentPosition()*100/fcount + "%)");
         }
         motorLeftB.setPower(0);
         motorRightB.setPower(0);
