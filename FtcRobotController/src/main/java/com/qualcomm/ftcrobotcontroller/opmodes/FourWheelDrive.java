@@ -91,7 +91,7 @@ public class FourWheelDrive extends OpMode {
         trigger1.setPosition(0);
         trigger2.setPosition(1);
         dropper.setPosition(1);
-        presser.setPosition(.75);
+        presser.setPosition(.5);
 
     }
 
@@ -163,11 +163,11 @@ public class FourWheelDrive extends OpMode {
         }
 
         if(gamepad1.b){
-            trigger1.setPosition(0);
+            trigger1.setPosition(1);
         }
 
         if(gamepad1.y){
-            trigger1.setPosition(1);
+            trigger1.setPosition(0);
             trigger2.setPosition(1);
         }
 
@@ -185,6 +185,7 @@ public class FourWheelDrive extends OpMode {
 
 
 
+
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
 		 * a legacy NXT-compatible motor controller, then the getPower() method
@@ -197,7 +198,15 @@ public class FourWheelDrive extends OpMode {
         // values is a reference to the hsvValues array.
         final float values[] = hsvValues;
 
-        telemetry.addData("Text", "*** Robot Data***");
+        if(colorSensor.red()>colorSensor.blue()){
+            presser.setPosition(1);
+        }
+        if(colorSensor.red()<colorSensor.blue()){
+            presser.setPosition(0);
+        }
+
+
+            telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
         telemetry.addData("Red:", colorSensor.red());

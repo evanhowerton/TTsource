@@ -30,8 +30,8 @@ public class EncodersTest extends LinearOpMode {
     Servo presser;
 
     ColorSensor colorSensor;
-    final static double FRONT_DIAMETER = 1.8;
-    final static double BACK_DIAMETER = 1.5;
+    final static double FRONT_DIAMETER = 3.6;
+    final static double BACK_DIAMETER = 3;
     final static double FRONT_CIRCUMFERENCE = FRONT_DIAMETER*Math.PI;
     final static double BACK_CIRCUMFERENCE = BACK_DIAMETER*Math.PI;
     final static double PULSE = 1440;
