@@ -51,8 +51,8 @@ public class BlueShortEncoders extends LinearOpMode {
         motorLeftA.setDirection(DcMotor.Direction.REVERSE);
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
 
-        motorLeftA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        motorRightA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
         clawBody = hardwareMap.servo.get("servo_1");
         trigger1 = hardwareMap.servo.get("servo_2");
@@ -88,19 +88,21 @@ public class BlueShortEncoders extends LinearOpMode {
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
 
-        motorLeftA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
-        motorRightA.setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
-        motorLeftA.setTargetPosition((int)COUNTS);
+        motorLeftA.setTargetPosition((int) COUNTS);
         motorRightA.setTargetPosition((int) COUNTS);
 
-        motorLeftA.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        motorRightA.setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorLeftA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorRightA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
 
         motorLeftA.setPower(pow);
         motorRightA.setPower(pow);
-        motorLeftB.setPower(pow);
-
+        while(motorLeftA.getMode()==DcMotorController.RunMode.RUN_TO_POSITION) {
+            motorLeftB.setPower(pow * .8181);
+            motorRightB.setPower(pow * .8181);
+        }
 
         sleep((long) (pause * 1000));
     }

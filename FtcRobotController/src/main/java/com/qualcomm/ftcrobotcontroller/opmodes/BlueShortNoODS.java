@@ -59,19 +59,18 @@ public class BlueShortNoODS extends LinearOpMode {
 
         // Wait for the start button to be pressed
         waitForStart();
-        /*drive(0, 1, .5);
-        drive(.5, 1, .5);
-        turn(49, 1, .5);
-        drive(6.7, 1, .5);
-        turn(54, 1, .5);
+        drive(0, 1, .1);
+        drive(.5, 1, .1);
+        turn(49, 1, .1);
+        drive(6.7, 1, .1);
+        turn(54, 1, .1);
         //drive(.75, 1, .5);
         colorPress();
 
 
-        claw(.5);
+        claw(.1);
         blueRamp();
-        */
-        setAngle(90,.5);
+        setAngle(90,.1);
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
@@ -188,14 +187,14 @@ public class BlueShortNoODS extends LinearOpMode {
     }
 
     public void blueRamp() throws InterruptedException {
-        drive(1, 1, .5);
-        turn(-50, -1, .5);
-        drive(2.4, 1, .5);
-        turn(92, -1, .5);
-        drive(3.25, -1, .5);
+        drive(1, 1, .1);
+        turn(-50, -1, .1);
+        drive(2.4, 1, .1);
+        turn(92, -1, .1);
+        drive(3.25, -1, .1);
 
-        setAngle(60.0, .5);
-        tapeExt(3, 1, 1.5);
+        setAngle(60.0, .1);
+        tapeExt(3, 1, 1);
         setAngle(0.0, 2);
         tapePull(4.5, -.5, .5);
     }
