@@ -82,23 +82,24 @@ public class EncodersTest extends LinearOpMode {
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
         double fcount = dist*(PULSE/FRONT_CIRCUMFERENCE);
-        double bcount = dist*(PULSE/BACK_CIRCUMFERENCE);
-        DcMotor motors[] = {motorLeftA, motorRightA, motorLeftB, motorRightB};
-        for(DcMotor x: motors) {
+        DcMotor frontMotors[] = {motorLeftA, motorRightA};
+        for(DcMotor x: frontMotors) {
             x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        }
-        //test
-        motorRightA.setTargetPosition((int) fcount);
-        motorRightB.setTargetPosition((int) bcount);
-        motorLeftA.setTargetPosition((int) fcount);
-        motorLeftB.setTargetPosition((int) bcount);
-        for(DcMotor x: motors) {
+            x.setTargetPosition((int) fcount);
             x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         }
-        motorRightA.setPower(RATIO*pow);
+
+        motorRightA.setPower(RATIO * pow);
         motorLeftA.setPower(RATIO*pow);
         motorRightB.setPower(pow);
         motorLeftB.setPower(pow);
+        while(motorLeftA.getPower()!=0 ){
+            motorLeftB.setPower(pow);
+            motorRightB.setPower(pow);
+        }
+        motorLeftB.setPower(0);
+        motorRightB.setPower(0);
+
         sleep((long) (pause * 1000));
     }
 
