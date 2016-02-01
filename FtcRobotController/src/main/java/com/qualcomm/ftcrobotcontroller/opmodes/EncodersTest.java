@@ -87,6 +87,7 @@ public class EncodersTest extends LinearOpMode {
         for(DcMotor x: motors) {
             x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         }
+        //test
         motorRightA.setTargetPosition((int) fcount);
         motorRightB.setTargetPosition((int) bcount);
         motorLeftA.setTargetPosition((int) fcount);
