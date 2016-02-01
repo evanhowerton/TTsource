@@ -84,7 +84,6 @@ public class EncodersTest extends LinearOpMode {
         double fcount = dist*(PULSE/FRONT_CIRCUMFERENCE);
         double bcount = dist*(PULSE/BACK_CIRCUMFERENCE);
         DcMotor motors[] = {motorLeftA, motorRightA, motorLeftB, motorRightB};
-        //t
         for(DcMotor x: motors) {
             x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         }
