@@ -88,13 +88,16 @@ public class EncodersTest extends LinearOpMode {
             x.setTargetPosition((int) fcount);
             x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         }
+
         motorRightA.setPower(RATIO * pow);
         motorLeftA.setPower(RATIO*pow);
         motorRightB.setPower(pow);
         motorLeftB.setPower(pow);
+
         while(motorLeftA.isBusy()){
             motorLeftB.setPower(pow);
             motorRightB.setPower(pow);
+            telemetry.addData("Distance: ", (motorLeftA.getCurrentPosition()/1440)*FRONT_CIRCUMFERENCE);
         }
         motorLeftB.setPower(0);
         motorRightB.setPower(0);
