@@ -63,9 +63,10 @@ public class ETTwo extends LinearOpMode {
 
 
 
-        trigger1.setPosition(.5);
-        trigger2.setPosition(.5);
+        trigger1.setPosition(0);
+        trigger2.setPosition(1);
         clawBody.setPosition(1);
+        presser.setPosition(.5);
 
 
         // Wait for the start button to be pressed
@@ -85,6 +86,8 @@ public class ETTwo extends LinearOpMode {
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
         // enter dist in FEET
+        encoderMotor.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+
         double fcount = PULSE*((dist*12)/FRONT_CIRCUMFERENCE);
         DcMotor frontMotors[] = {motorLeftA, motorRightA};
             motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);

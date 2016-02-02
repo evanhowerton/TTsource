@@ -91,8 +91,8 @@ public class BlueShortEncoders extends LinearOpMode {
         motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         motorRightA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
-        motorLeftA.setTargetPosition((int) COUNTS);
-        motorRightA.setTargetPosition((int) COUNTS);
+        motorLeftA.setTargetPosition(((int) (COUNTS * dist)));
+        motorRightA.setTargetPosition(((int) (COUNTS*dist)));
 
         motorLeftA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         motorRightA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);

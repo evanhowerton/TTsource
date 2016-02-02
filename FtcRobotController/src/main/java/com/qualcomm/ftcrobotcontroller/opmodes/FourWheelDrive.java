@@ -163,7 +163,7 @@ public class FourWheelDrive extends OpMode {
         }
 
         if(gamepad1.b){
-            trigger1.setPosition(1);
+            trigger2.setPosition(0);
         }
 
         if(gamepad1.y){
@@ -172,7 +172,7 @@ public class FourWheelDrive extends OpMode {
         }
 
         if(gamepad1.x){
-            trigger2.setPosition(0);
+            trigger1.setPosition(1);
         }
 
         if(gamepad2.right_bumper){

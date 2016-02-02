@@ -48,7 +48,7 @@ public class RedShortNoODS extends LinearOpMode {
         tapeAngle = hardwareMap.servo.get("servo_4");
         presser = hardwareMap.servo.get("servo_5");
 
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
+        colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
 
 

@@ -50,12 +50,10 @@ public class BlueShortNoODS extends LinearOpMode {
 
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
-
-
-        trigger1.setPosition(.5);
-        trigger2.setPosition(.5);
+        trigger1.setPosition(0);
+        trigger2.setPosition(1);
         clawBody.setPosition(1);
-
+        presser.setPosition(.5);
 
         // Wait for the start button to be pressed
         waitForStart();

@@ -67,8 +67,7 @@ public class EncodersTest extends LinearOpMode {
 
         // Wait for the start button to be pressed
         waitForStart();
-        drive(0, 1, .5);
-        drive(.5, 1, .5);
+        drive(50, 1, .5);
         turn(-49, 1, .5);
         drive(6.7, 1, .5);
         turn(-54, 1, .5);
@@ -91,7 +90,7 @@ public class EncodersTest extends LinearOpMode {
         }
 
         motorRightA.setPower(RATIO * pow);
-        motorLeftA.setPower(RATIO*pow);
+        motorLeftA.setPower(RATIO * pow);
         motorRightB.setPower(pow);
         motorLeftB.setPower(pow);
 
@@ -99,6 +98,7 @@ public class EncodersTest extends LinearOpMode {
             motorLeftB.setPower(pow);
             motorRightB.setPower(pow);
             telemetry.addData("Distance: ", ((motorLeftA.getCurrentPosition()/PULSE)*FRONT_CIRCUMFERENCE)/12 + " of " + dist + "ft" + " (" + (double)motorLeftA.getCurrentPosition()*100/fcount + "%)");
+            telemetry.addData("BUSY ", motorLeftA.isBusy());
         }
         motorLeftB.setPower(0);
         motorRightB.setPower(0);
@@ -172,14 +172,14 @@ public class EncodersTest extends LinearOpMode {
     public void tapePull(double length, double pow, double pause) throws InterruptedException{
         double maxVel=2;
 
-        tapeExt1.setPower(-pow);
-        tapeExt2.setPower(-pow*.25);
+        tapeExt1.setPower(pow);
+        tapeExt2.setPower(pow*.25);
         sleep(1500);
 
-        motorLeftA.setPower(pow);
-        motorRightA.setPower(pow);
-        motorLeftB.setPower(pow);
-        motorRightB.setPower(pow);
+        motorLeftA.setPower(-pow);
+        motorRightA.setPower(-pow);
+        motorLeftB.setPower(-pow);
+        motorRightB.setPower(-pow);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
         tapeExt1.setPower(0);
