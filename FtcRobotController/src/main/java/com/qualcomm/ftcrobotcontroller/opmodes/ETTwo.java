@@ -22,6 +22,8 @@ public class ETTwo extends LinearOpMode {
     DcMotor tapeExt1;
     DcMotor tapeExt2;
 
+    DcMotorController encoderMotor;
+
     Servo clawBody;
     Servo trigger1;
     Servo trigger2;
@@ -49,6 +51,7 @@ public class ETTwo extends LinearOpMode {
         motorLeftA.setDirection(DcMotor.Direction.REVERSE);
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
 
+        encoderMotor= hardwareMap.dcMotorController.get("encoder_motor");
         clawBody = hardwareMap.servo.get("servo_1");
         trigger1 = hardwareMap.servo.get("servo_2");
         trigger2 = hardwareMap.servo.get("servo_3");
@@ -93,6 +96,10 @@ public class ETTwo extends LinearOpMode {
         motorRightB.setPower(pow);
         motorLeftB.setPower(pow);
 
+        encoderMotor.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+        for (int x=0; x<=17; x++) {
+            waitOneFullHardwareCycle();
+        }
         while(motorLeftA.isBusy()){
             motorLeftB.setPower(pow);
             motorRightB.setPower(pow);
