@@ -78,8 +78,8 @@ public class ETTwo extends LinearOpMode {
         claw(.5);
         //redRamp();
         */
-        drive(10,1,.5);
-        drive(10,-1,.5);
+        drive(10,1,5);
+        drive(10,-1,5);
 
     }
 
