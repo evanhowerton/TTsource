@@ -66,6 +66,7 @@ public class ETTwo extends LinearOpMode {
 
         // Wait for the start button to be pressed
         waitForStart();
+        /*
         drive(0, 1, .5);
         drive(3, 1, .5);
         turn(-49, 1, .5);
@@ -75,7 +76,10 @@ public class ETTwo extends LinearOpMode {
         colorPress();
 
         claw(.5);
-        redRamp();
+        //redRamp();
+        */
+        drive(10,1,.5);
+        drive(10,-1,.5);
 
     }
 
@@ -97,32 +101,29 @@ public class ETTwo extends LinearOpMode {
     }
 
     public void turn(double theta, double pow, double pause) throws InterruptedException {
+        DcMotor motors[] = {motorLeftA, motorRightA, motorLeftB, motorRightB};
 
-        double period = 3.2;
+        for(DcMotor x: motors) {
+            x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+            x.setTargetPosition((int) 10000);
+            x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        }
 
         if(theta>0){
-            motorLeftA.setPower(pow);
-            motorRightA.setPower(-pow);
+            motorLeftA.setPower(RATIO * pow);
+            motorRightA.setPower(RATIO * -pow);
             motorLeftB.setPower(pow);
             motorRightB.setPower(-pow);
         }
 
         if(theta<0){
-            motorLeftA.setPower(-pow);
-            motorRightA.setPower(pow);
+            motorLeftA.setPower(RATIO * -pow);
+            motorRightA.setPower(RATIO * pow);
             motorLeftB.setPower(-pow);
             motorRightB.setPower(pow);
         }
 
-        sleep((long) (1000 * Math.abs((theta / 360) * period)));
-
-        motorLeftA.setPower(0);
-        motorRightA.setPower(0);
-        motorLeftB.setPower(0);
-        motorRightB.setPower(0);
-
-        sleep((long)(pause*1000));
-
+        sleep((long) (pause * 1000));
     }
     public void claw(double pause) throws InterruptedException {
 
@@ -149,8 +150,8 @@ public class ETTwo extends LinearOpMode {
 
         double maxVel=2;
 
-        tapeExt1.setPower(-pow);
-        tapeExt2.setPower(-pow*.25);
+        tapeExt1.setPower(pow);
+        tapeExt2.setPower(pow*.25);
         sleep((long) (1000 * (Math.abs(length / (maxVel * pow)))));
 
         tapeExt1.setPower(0);
