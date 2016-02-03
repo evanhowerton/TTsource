@@ -22,8 +22,6 @@ public class ETTwo extends LinearOpMode {
     DcMotor tapeExt1;
     DcMotor tapeExt2;
 
-    DcMotorController encoderMotor;
-
     Servo clawBody;
     Servo trigger1;
     Servo trigger2;
@@ -51,7 +49,6 @@ public class ETTwo extends LinearOpMode {
         motorLeftA.setDirection(DcMotor.Direction.REVERSE);
         motorLeftB.setDirection(DcMotor.Direction.REVERSE);
 
-        encoderMotor= hardwareMap.dcMotorController.get("encoder_motor");
         clawBody = hardwareMap.servo.get("servo_1");
         trigger1 = hardwareMap.servo.get("servo_2");
         trigger2 = hardwareMap.servo.get("servo_3");
@@ -59,9 +56,7 @@ public class ETTwo extends LinearOpMode {
         plow = hardwareMap.servo.get("servo_5");
         presser = hardwareMap.servo.get("servo_6");
 
-        colorSensor = hardwareMap.colorSensor.get("sensor_color");
-
-
+        colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
         trigger1.setPosition(0);
         trigger2.setPosition(1);
@@ -85,33 +80,18 @@ public class ETTwo extends LinearOpMode {
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
-        // enter dist in FEET
-        encoderMotor.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
-
         double fcount = PULSE*((dist*12)/FRONT_CIRCUMFERENCE);
-        DcMotor frontMotors[] = {motorLeftA, motorRightA};
-            motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-            motorLeftA.setTargetPosition((int) fcount);
-            motorLeftA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        DcMotor motors[] = {motorLeftA, motorRightA, motorLeftB, motorRightB};
+        for(DcMotor x: motors) {
+            x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+            x.setTargetPosition((int) fcount);
+            x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        }
 
         motorRightA.setPower(RATIO * pow);
-        motorLeftA.setPower(RATIO*pow);
+        motorLeftA.setPower(RATIO * pow);
         motorRightB.setPower(pow);
         motorLeftB.setPower(pow);
-
-        encoderMotor.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
-        for (int x=0; x<=17; x++) {
-            waitOneFullHardwareCycle();
-        }
-        while(motorLeftA.isBusy()){
-            motorLeftB.setPower(pow);
-            motorRightB.setPower(pow);
-            motorRightA.setPower(RATIO*pow);
-            telemetry.addData("Distance: ", ((motorLeftA.getCurrentPosition()/PULSE)*FRONT_CIRCUMFERENCE)/12 + " of " + dist + "ft" + " (" + (double)motorLeftA.getCurrentPosition()*100/fcount + "%)");
-        }
-        motorLeftB.setPower(0);
-        motorRightB.setPower(0);
-        motorRightA.setPower(0);
 
         sleep((long) (pause * 1000));
     }
