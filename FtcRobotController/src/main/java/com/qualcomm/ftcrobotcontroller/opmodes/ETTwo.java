@@ -31,11 +31,11 @@ public class ETTwo extends LinearOpMode {
 
     ColorSensor colorSensor;
     final static double FRONT_DIAMETER = 3.6;
-    final static double BACK_DIAMETER = 3;
+    final static double BACK_DIAMETER = 3.0;
     final static double FRONT_CIRCUMFERENCE = FRONT_DIAMETER*Math.PI;
     final static double BACK_CIRCUMFERENCE = BACK_DIAMETER*Math.PI;
     final static double PULSE = 1440;
-    final static double RATIO = BACK_DIAMETER/FRONT_DIAMETER;
+    final static double RATIO = (double)(9.0/11.0);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -78,9 +78,8 @@ public class ETTwo extends LinearOpMode {
         claw(.5);
         //redRamp();
         */
-        drive(10, 1, 5);
-        drive(10, -1, 5);
-
+        drive(0, 1, 1);
+        drive(10, 1, 10);
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
@@ -89,23 +88,25 @@ public class ETTwo extends LinearOpMode {
         DcMotor frontmotors[] = {motorLeftA, motorRightA};
         DcMotor backmotors[] = {motorLeftB, motorRightB};
         for(DcMotor x: frontmotors) {
+            x.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
             x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
             x.setTargetPosition((int) fcount);
             x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         }
 
         for(DcMotor y: backmotors) {
+            y.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
             y.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-            y.setTargetPosition((int) bcount);
+            y.setTargetPosition((int) fcount);
             y.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         }
 
-        motorRightA.setPower(RATIO * pow);
-        motorLeftA.setPower(RATIO * pow);
-        motorRightB.setPower(pow);
+        motorLeftA.setPower(pow);
+        motorRightA.setPower(pow*.1);
+        motorRightB.setPower(pow*.1);
         motorLeftB.setPower(pow);
 
-        sleep((long) (pause * 10000));
+        sleep((long) (pause * 1000));
     }
 
     public void turn(double theta, double pow, double pause) throws InterruptedException {

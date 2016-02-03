@@ -89,9 +89,9 @@ public class FourWheelDrive extends OpMode {
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
         trigger1.setPosition(0);
-        trigger2.setPosition(1);
+        trigger2.setPosition(.9);
         dropper.setPosition(1);
-        presser.setPosition(.5);
+        presser.setPosition(1);
 
     }
 
@@ -133,10 +133,10 @@ public class FourWheelDrive extends OpMode {
         left =  (float)scaleInput(left);
 
         // sets value to motors
-        motorRightA.setPower(right);
-        motorRightB.setPower(.8181*right);
-        motorLeftA.setPower(left);
-        motorLeftB.setPower(.8181*left);
+        motorRightA.setPower(.8181*right);
+        motorRightB.setPower(right);
+        motorLeftA.setPower(.8181*left);
+        motorLeftB.setPower(left);
         colorSensor.enableLed(true);
 
         if(gamepad2.dpad_up){
@@ -163,16 +163,16 @@ public class FourWheelDrive extends OpMode {
         }
 
         if(gamepad1.b){
-            trigger2.setPosition(0);
+            trigger2.setPosition(0.1);
         }
 
         if(gamepad1.y){
             trigger1.setPosition(0);
-            trigger2.setPosition(1);
+            trigger2.setPosition(.9);
         }
 
         if(gamepad1.x){
-            trigger1.setPosition(1);
+            trigger1.setPosition(.9);
         }
 
         if(gamepad2.right_bumper){
