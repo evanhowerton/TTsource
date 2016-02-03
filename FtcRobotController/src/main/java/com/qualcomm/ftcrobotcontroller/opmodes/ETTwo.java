@@ -78,18 +78,26 @@ public class ETTwo extends LinearOpMode {
         claw(.5);
         //redRamp();
         */
-        drive(10,1,5);
-        drive(10,-1,5);
+        drive(10, 1, 5);
+        drive(10, -1, 5);
 
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
         double fcount = PULSE*((dist*12)/FRONT_CIRCUMFERENCE);
-        DcMotor motors[] = {motorLeftA, motorRightA, motorLeftB, motorRightB};
-        for(DcMotor x: motors) {
+        double bcount = PULSE*((dist*12)/BACK_CIRCUMFERENCE);
+        DcMotor frontmotors[] = {motorLeftA, motorRightA};
+        DcMotor backmotors[] = {motorLeftB, motorRightB};
+        for(DcMotor x: frontmotors) {
             x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
             x.setTargetPosition((int) fcount);
             x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        }
+
+        for(DcMotor y: backmotors) {
+            y.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+            y.setTargetPosition((int) bcount);
+            y.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         }
 
         motorRightA.setPower(RATIO * pow);
@@ -97,7 +105,7 @@ public class ETTwo extends LinearOpMode {
         motorRightB.setPower(pow);
         motorLeftB.setPower(pow);
 
-        sleep((long) (pause * 1000));
+        sleep((long) (pause * 10000));
     }
 
     public void turn(double theta, double pow, double pause) throws InterruptedException {
