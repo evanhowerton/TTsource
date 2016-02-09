@@ -89,9 +89,9 @@ public class FourWheelDrive extends OpMode {
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
         trigger1.setPosition(0);
-        trigger2.setPosition(.9);
+        trigger2.setPosition(1);
         dropper.setPosition(1);
-        presser.setPosition(1);
+        presser.setPosition(.15);
 
     }
 
@@ -129,20 +129,20 @@ public class FourWheelDrive extends OpMode {
 
         // scale the joystick value to make it easier to control
         // the robot more precisely at slower speeds.
-        right = (float)scaleInput(right);
-        left =  (float)scaleInput(left);
+        right = (float) scaleInput(right);
+        left = (float) scaleInput(left);
 
         // sets value to motors
-        motorRightA.setPower(.8181*right);
+        motorRightA.setPower(scaleInput(right));
         motorRightB.setPower(right);
-        motorLeftA.setPower(.8181*left);
+        motorLeftA.setPower(scaleInput(right));
         motorLeftB.setPower(left);
         colorSensor.enableLed(true);
 
-        if(gamepad2.dpad_up){
+        if (gamepad2.dpad_up) {
             tapePosition += tapeDelta;
         }
-        if(gamepad2.dpad_down){
+        if (gamepad2.dpad_down) {
             tapePosition -= tapeDelta;
         }
 
@@ -152,35 +152,45 @@ public class FourWheelDrive extends OpMode {
 
 
         tapeMain.setPower(gamepad2.right_stick_y * -1);
-        if(gamepad2.right_stick_y>0) {
+        if (gamepad2.right_stick_y > 0) {
             tapeExt2.setPower(gamepad2.right_stick_y * .1);
         }
-        if(gamepad2.right_stick_y<0) {
+        if (gamepad2.right_stick_y < 0) {
             tapeExt2.setPower(gamepad2.right_stick_y * .2);
         }
-        if(gamepad2.right_stick_y==0) {
+        if (gamepad2.right_stick_y == 0) {
             tapeExt2.setPower(gamepad2.right_stick_y * 0);
         }
 
-        if(gamepad1.b){
-            trigger2.setPosition(0.1);
+        if (gamepad1.b) {
+            trigger2.setPosition(.25);
         }
 
-        if(gamepad1.y){
+        if (gamepad1.y) {
             trigger1.setPosition(0);
-            trigger2.setPosition(.9);
+            trigger2.setPosition(1);
         }
 
-        if(gamepad1.x){
-            trigger1.setPosition(.9);
+        if (gamepad1.x) {
+            trigger1.setPosition(.6);
         }
 
-        if(gamepad2.right_bumper){
+        if (gamepad2.right_bumper) {
             dropper.setPosition(0);
         }
 
-        if(gamepad2.left_bumper){
+        if (gamepad2.left_bumper) {
             dropper.setPosition(1);
+        }
+
+        if (gamepad1.right_bumper) {
+            presser.setPosition(.3);
+        }
+        if (gamepad1.back) {
+            presser.setPosition(.15);
+        }
+        if (gamepad1.left_bumper) {
+            presser.setPosition(0);
         }
 
 
@@ -194,20 +204,20 @@ public class FourWheelDrive extends OpMode {
 		 */
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
-        float hsvValues[] = {0F,0F,0F};
+        float hsvValues[] = {0F, 0F, 0F};
         // values is a reference to the hsvValues array.
         final float values[] = hsvValues;
 
-        if(colorSensor.red()>colorSensor.blue()){
+        if (colorSensor.red() > colorSensor.blue()) {
             presser.setPosition(1);
         }
-        if(colorSensor.red()<colorSensor.blue()){
+        if (colorSensor.red() < colorSensor.blue()) {
             presser.setPosition(0);
         }
 
 
-            telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
+        telemetry.addData("Text", "*** Robot Data***");
+        telemetry.addData("left tgt pwr", "left  pwr: " + String.format("%.2f", left));
         telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
         telemetry.addData("Red:", colorSensor.red());
         telemetry.addData("Blue:", colorSensor.blue());
@@ -229,18 +239,16 @@ public class FourWheelDrive extends OpMode {
      * Scales the right and left values utilizing the Howerton-Chance Algorithm
      */
 
-    double scaleInput(double dVal)  {
+    double scaleInput(double dVal) {
 
-        if(gamepad1.a){
+        if (gamepad1.a) {
             if (dVal > 0) {
                 dVal = .4 * (Math.pow(2.71828, (dVal * .4)) - 1);
             }
             if (dVal < 0) {
                 dVal = -.4 * (Math.pow(2.71828, (dVal * -.4)) - 1);
             }
-        }
-
-        else{
+        } else {
             if (dVal > 0) {
                 dVal = .8 * (Math.pow(2.71828, (dVal * .4)) - 1);
             }
@@ -250,5 +258,18 @@ public class FourWheelDrive extends OpMode {
         }
 
         return dVal;
+    }
+
+
+    double scaleFront(double pow) {
+
+        if (pow < .2) {
+            pow *= 100 / (575*pow);
+        }
+        if (pow >= .2) {
+            pow *= 100/(152.465/(1+(1.382*(Math.exp(-7.352*pow)))));
+        }
+
+        return pow;
     }
 }

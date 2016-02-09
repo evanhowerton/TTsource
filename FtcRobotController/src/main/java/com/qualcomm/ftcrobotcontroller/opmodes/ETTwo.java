@@ -101,8 +101,12 @@ public class ETTwo extends LinearOpMode {
             y.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         }
 
+        for(int x=0;x<17;x++){
+            waitOneFullHardwareCycle();
+        }
+
         motorLeftA.setPower(pow);
-        motorRightA.setPower(pow*.1);
+        motorRightA.setPower(pow);
         motorRightB.setPower(pow*.1);
         motorLeftB.setPower(pow);
 

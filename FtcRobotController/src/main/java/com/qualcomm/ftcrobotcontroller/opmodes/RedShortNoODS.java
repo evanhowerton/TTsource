@@ -29,6 +29,8 @@ public class RedShortNoODS extends LinearOpMode {
 
     ColorSensor colorSensor;
 
+    final static double RATIO = .2525;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -52,32 +54,30 @@ public class RedShortNoODS extends LinearOpMode {
 
 
 
-        trigger1.setPosition(.5);
-        trigger2.setPosition(.5);
+        trigger1.setPosition(0);
+        trigger2.setPosition(1);
         clawBody.setPosition(1);
-
+        tapeAngle.setPosition(.4);
+        presser.setPosition(.15);
 
         // Wait for the start button to be pressed
         waitForStart();
-        drive(0, 1, .1);
-        drive(.5, 1, .1);
-        turn(-49, 1, .1);
-        drive(6.7, 1, .1);
-        turn(-54, 1, .1);
-        //drive(.75, 1, .5);
-        colorPress();
-
-        claw(.1);
-        redRamp();
+        drive(0, 1, .5);
+        drive(.5, 1, .5);
+        turn(-45, 1, 1);
+        drive(7.5, 1, .5);
+        turn(-50, 1, 1);
+        claw(1);
+        redPress();
 
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
 
-        double maxVel= 2.31;
+        double maxVel= 2.3;
 
-        motorLeftA.setPower(pow);
-        motorRightA.setPower(pow);
+        motorLeftA.setPower(pow*RATIO);
+        motorRightA.setPower(pow*RATIO);
         motorLeftB.setPower(pow);
         motorRightB.setPower(pow);
 
@@ -93,18 +93,18 @@ public class RedShortNoODS extends LinearOpMode {
 
     public void turn(double theta, double pow, double pause) throws InterruptedException {
 
-        double period = 3.2;
+        double period = 2.3;
 
         if(theta>0){
-            motorLeftA.setPower(pow);
-            motorRightA.setPower(-pow);
+            motorLeftA.setPower(pow*RATIO);
+            motorRightA.setPower(-pow*RATIO);
             motorLeftB.setPower(pow);
             motorRightB.setPower(-pow);
         }
 
         if(theta<0){
-            motorLeftA.setPower(-pow);
-            motorRightA.setPower(pow);
+            motorLeftA.setPower(-pow*RATIO);
+            motorRightA.setPower(pow*RATIO);
             motorLeftB.setPower(-pow);
             motorRightB.setPower(pow);
         }
@@ -198,14 +198,17 @@ public class RedShortNoODS extends LinearOpMode {
         tapePull(4.5, -.5, .5);
     }
 
-    public void colorPress() throws InterruptedException {
-
+    public void redPress() throws InterruptedException {
+        double colPos = 0.5;
         if (colorSensor.red() > colorSensor.blue()) {
-            presser.setPosition(.25);
+            colPos = 0;
+        } else if (colorSensor.blue() > colorSensor.blue()) {
+            colPos = 1;
         }
-        else if(colorSensor.blue() > colorSensor.blue()) {
-            presser.setPosition(.75);
+        if (colPos != .5) {
+            drive(1, -1, 2);
+            presser.setPosition(colPos);
+            drive(1.1, 1, .5);
         }
     }
-
 }
