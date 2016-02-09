@@ -222,6 +222,7 @@ public class FourWheelDrive extends OpMode {
         telemetry.addData("Red:", colorSensor.red());
         telemetry.addData("Blue:", colorSensor.blue());
         telemetry.addData("Green:", colorSensor.green());
+        telemetry.addData("Scale:", scaleFront(right));
 
     }
 
@@ -262,12 +263,12 @@ public class FourWheelDrive extends OpMode {
 
 
     double scaleFront(double pow) {
-
+        double z = (-151.727-(Math.sqrt(Math.pow(151.727,2)-(4*(-93.939)*(92.9333-(.8181*pow))))))/(2*(-93.939));
         if (pow < .2) {
-            pow *= 100 / (575*pow);
+            pow*=.818181;
         }
         if (pow >= .2) {
-            pow *= 100/(152.465/(1+(1.382*(Math.exp(-7.352*pow)))));
+            pow = 1/((-151.727-(Math.sqrt(Math.pow(151.727,2)-(4*(-93.939)*(92.9333-(.8181*z))))))/(2*(-93.939)));
         }
 
         return pow;
