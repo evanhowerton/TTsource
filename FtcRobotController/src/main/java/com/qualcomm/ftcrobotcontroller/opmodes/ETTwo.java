@@ -53,8 +53,7 @@ public class ETTwo extends LinearOpMode {
         trigger1 = hardwareMap.servo.get("servo_2");
         trigger2 = hardwareMap.servo.get("servo_3");
         tapeAngle = hardwareMap.servo.get("servo_4");
-        plow = hardwareMap.servo.get("servo_5");
-        presser = hardwareMap.servo.get("servo_6");
+        presser = hardwareMap.servo.get("servo_5");
 
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
@@ -105,9 +104,9 @@ public class ETTwo extends LinearOpMode {
         motorRightB.setTargetPosition((int) bcount);
 
         for(int b=0;b<17;b++){
-                waitOneFullHardwareCycle();
+            waitOneFullHardwareCycle();
         }
-
+//
         motorLeftA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         motorRightA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         motorLeftB.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
@@ -115,7 +114,7 @@ public class ETTwo extends LinearOpMode {
 
 
         for(int c=0;c<17;c++){
-                waitOneFullHardwareCycle();
+            waitOneFullHardwareCycle();
         }
 
         motorLeftA.setPower(pow*RATIO);
@@ -127,11 +126,11 @@ public class ETTwo extends LinearOpMode {
             waitOneFullHardwareCycle();
         }
 
-//        sleep((long) (pause * 1000));
-//
-//        for(int e=0;e<17;e++){
-//            waitOneFullHardwareCycle();
-//        }
+        sleep((long) (pause * 1000));
+
+        for(int e=0;e<17;e++){
+            waitOneFullHardwareCycle();
+        }
     }
 
     public void turn(double theta, double pow, double pause) throws InterruptedException {

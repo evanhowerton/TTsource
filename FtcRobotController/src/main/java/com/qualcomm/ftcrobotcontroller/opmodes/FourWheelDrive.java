@@ -33,7 +33,7 @@ public class FourWheelDrive extends OpMode {
     Servo trigger1;
     Servo trigger2;
     Servo tapeAngle;
-    Servo presser;
+
 
     final static double tapeDelta = .0025;
     double tapePosition = 0;
@@ -84,15 +84,14 @@ public class FourWheelDrive extends OpMode {
         trigger1 = hardwareMap.servo.get("servo_2");
         trigger2 = hardwareMap.servo.get("servo_3");
         tapeAngle = hardwareMap.servo.get("servo_4");
-        presser = hardwareMap.servo.get("servo_5");
+
 
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
         trigger1.setPosition(0);
         trigger2.setPosition(1);
         dropper.setPosition(1);
-        presser.setPosition(.15);
-
+        tapeAngle.setPosition(.45);
     }
 
     /*
@@ -183,15 +182,7 @@ public class FourWheelDrive extends OpMode {
             dropper.setPosition(1);
         }
 
-        if (gamepad1.right_bumper) {
-            presser.setPosition(.3);
-        }
-        if (gamepad1.back) {
-            presser.setPosition(.15);
-        }
-        if (gamepad1.left_bumper) {
-            presser.setPosition(0);
-        }
+
 
 
 
@@ -208,12 +199,7 @@ public class FourWheelDrive extends OpMode {
         // values is a reference to the hsvValues array.
         final float values[] = hsvValues;
 
-        if (colorSensor.red() > colorSensor.blue()) {
-            presser.setPosition(1);
-        }
-        if (colorSensor.red() < colorSensor.blue()) {
-            presser.setPosition(0);
-        }
+
 
 
         telemetry.addData("Text", "*** Robot Data***");
