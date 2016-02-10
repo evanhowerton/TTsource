@@ -91,7 +91,7 @@ public class FourWheelDrive extends OpMode {
         trigger1.setPosition(0);
         trigger2.setPosition(1);
         dropper.setPosition(1);
-        tapeAngle.setPosition(.45);
+
     }
 
     /*
