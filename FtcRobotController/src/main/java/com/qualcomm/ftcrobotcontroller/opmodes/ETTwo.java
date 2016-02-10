@@ -97,7 +97,7 @@ public class ETTwo extends LinearOpMode {
         for(int i=0;i<17;i++){
             waitOneFullHardwareCycle();
         }
-//
+
         motorLeftA.setTargetPosition((int) fcount);
         motorRightA.setTargetPosition((int) fcount);
         motorLeftB.setTargetPosition((int) bcount);
