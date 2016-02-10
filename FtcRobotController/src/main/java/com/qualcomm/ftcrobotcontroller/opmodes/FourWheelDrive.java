@@ -133,9 +133,9 @@ public class FourWheelDrive extends OpMode {
         left = (float) scaleInput(left);
 
         // sets value to motors
-        motorRightA.setPower(scaleInput(right));
+        motorRightA.setPower(right);
         motorRightB.setPower(right);
-        motorLeftA.setPower(scaleInput(right));
+        motorLeftA.setPower(left);
         motorLeftB.setPower(left);
         colorSensor.enableLed(true);
 

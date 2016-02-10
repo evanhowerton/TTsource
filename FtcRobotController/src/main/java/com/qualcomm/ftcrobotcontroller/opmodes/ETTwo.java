@@ -35,7 +35,7 @@ public class ETTwo extends LinearOpMode {
     final static double FRONT_CIRCUMFERENCE = FRONT_DIAMETER*Math.PI;
     final static double BACK_CIRCUMFERENCE = BACK_DIAMETER*Math.PI;
     final static double PULSE = 1440;
-    final static double RATIO = .25;
+    final static double RATIO = .53;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -61,52 +61,61 @@ public class ETTwo extends LinearOpMode {
         trigger1.setPosition(0);
         trigger2.setPosition(1);
         clawBody.setPosition(1);
-        presser.setPosition(.5);
+        presser.setPosition(.15);
+        tapeAngle.setPosition(.45);
 
+        motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorLeftB.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightB.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+
+        for(int f=0;f<17;f++){
+            waitOneFullHardwareCycle();
+        }
 
         // Wait for the start button to be pressed
         waitForStart();
-        /*
-        drive(0, 1, .5);
-        drive(3, 1, .5);
-        turn(-49, 1, .5);
-        drive(6.7, 1, .5);
-        turn(-54, 1, .5);
-        //drive(.5, 1, .5);
-        colorPress();
 
-        claw(.5);
-        //redRamp();
-        */
-        drive(0, 1, 1);
-        drive(10, 1, 10);
+        drive(0, 1, .5);
+        drive(1, 1, 1);
+        turn(45, 1, 1);
+        drive(16, 1, 1);
+        turn(45, 1, .5);
+        claw(2);
+        redPress();
+
     }
 
     public void drive(double dist, double pow, double pause) throws InterruptedException {
         double fcount = PULSE*((dist*12)/FRONT_CIRCUMFERENCE);
         double bcount = PULSE*((dist*12)/BACK_CIRCUMFERENCE);
-        DcMotor frontmotors[] = {motorLeftA, motorRightA};
-        DcMotor backmotors[] = {motorLeftB, motorRightB};
-        for(DcMotor x: frontmotors) {
-            x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-            for(int i=0;i<17;i++){
-                waitOneFullHardwareCycle();
-            }
-            x.setTargetPosition((int) fcount);
-            x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        }
 
-        for(DcMotor y: backmotors) {
-            y.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-            for(int j=0;j<17;j++){
-                waitOneFullHardwareCycle();
-            }
-            y.setTargetPosition((int) bcount);
-            y.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        }
+        motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorLeftB.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightB.setMode(DcMotorController.RunMode.RESET_ENCODERS);
 
-        for(int x=0;x<17;x++){
+        for(int i=0;i<17;i++){
             waitOneFullHardwareCycle();
+        }
+
+        motorLeftA.setTargetPosition((int) fcount);
+        motorRightA.setTargetPosition((int) fcount);
+        motorLeftB.setTargetPosition((int) bcount);
+        motorRightB.setTargetPosition((int) bcount);
+
+        for(int b=0;b<17;b++){
+                waitOneFullHardwareCycle();
+        }
+
+        motorLeftA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorRightA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorLeftB.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorRightB.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+
+
+        for(int c=0;c<17;c++){
+                waitOneFullHardwareCycle();
         }
 
         motorLeftA.setPower(pow*RATIO);
@@ -114,33 +123,65 @@ public class ETTwo extends LinearOpMode {
         motorRightB.setPower(pow);
         motorLeftB.setPower(pow);
 
-        sleep((long) (pause * 1000));
+        for(int d=0;d<17;d++){
+            waitOneFullHardwareCycle();
+        }
+
+//        sleep((long) (pause * 1000));
+//
+//        for(int e=0;e<17;e++){
+//            waitOneFullHardwareCycle();
+//        }
     }
 
     public void turn(double theta, double pow, double pause) throws InterruptedException {
-        DcMotor motors[] = {motorLeftA, motorRightA, motorLeftB, motorRightB};
+        double counts = (theta/360)*7500;
 
-        for(DcMotor x: motors) {
-            x.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-            x.setTargetPosition((int) 10000);
-            x.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorLeftA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightA.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorLeftB.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        motorRightB.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+
+        for(int i=0;i<17;i++){
+            waitOneFullHardwareCycle();
         }
 
-        if(theta>0){
-            motorLeftA.setPower(RATIO * pow);
-            motorRightA.setPower(RATIO * -pow);
-            motorLeftB.setPower(pow);
-            motorRightB.setPower(-pow);
+        motorLeftA.setTargetPosition((int) -counts);
+        motorRightA.setTargetPosition((int) counts);
+        motorLeftB.setTargetPosition((int) -counts);
+        motorRightB.setTargetPosition((int) counts);
+
+        for(int b=0;b<17;b++){
+            waitOneFullHardwareCycle();
         }
 
-        if(theta<0){
-            motorLeftA.setPower(RATIO * -pow);
-            motorRightA.setPower(RATIO * pow);
-            motorLeftB.setPower(-pow);
-            motorRightB.setPower(pow);
+        motorLeftA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorRightA.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorLeftB.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        motorRightB.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+
+
+        for(int c=0;c<17;c++){
+            waitOneFullHardwareCycle();
         }
 
         sleep((long) (pause * 1000));
+
+        motorLeftA.setPower(RATIO * pow);
+        motorRightA.setPower(RATIO * pow);
+        motorLeftB.setPower(pow);
+        motorRightB.setPower(pow);
+
+
+        for(int d=0;d<17;d++){
+            waitOneFullHardwareCycle();
+        }
+
+//        sleep((long) (pause * 1000));
+//
+//        for(int e=0;e<17;e++){
+//            waitOneFullHardwareCycle();
+//        }
     }
     public void claw(double pause) throws InterruptedException {
 
@@ -221,13 +262,17 @@ public class ETTwo extends LinearOpMode {
         tapePull(4.5, -.5, .5);
     }
 
-    public void colorPress() throws InterruptedException {
-
+    public void redPress() throws InterruptedException {
+        double colPos = 0.5;
         if (colorSensor.red() > colorSensor.blue()) {
-            presser.setPosition(.25);
+            colPos = 0;
+        } else if (colorSensor.blue() > colorSensor.blue()) {
+            colPos = 1;
         }
-        else if(colorSensor.blue() > colorSensor.blue()) {
-            presser.setPosition(.75);
+        if (colPos != .5) {
+            drive(1, -1, 2);
+            presser.setPosition(colPos);
+            drive(1.1, 1, .5);
         }
     }
 

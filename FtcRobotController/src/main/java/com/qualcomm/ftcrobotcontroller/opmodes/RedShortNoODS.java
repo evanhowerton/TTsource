@@ -62,12 +62,14 @@ public class RedShortNoODS extends LinearOpMode {
 
         // Wait for the start button to be pressed
         waitForStart();
-        drive(0, 1, .5);
-        drive(.5, 1, .5);
-        turn(-45, 1, 1);
-        drive(7.5, 1, .5);
-        turn(-50, 1, 1);
-        claw(1);
+        drive(0,1,.5);
+        drive(10,1,1);
+//        drive(0, 1, .5);
+//        drive(.5, 1, .5);
+//        turn(-45, 1, 1);
+//        drive(7.5, 1, .5);
+//        turn(-50, 1, 1);
+//        claw(1);
         redPress();
 
     }
