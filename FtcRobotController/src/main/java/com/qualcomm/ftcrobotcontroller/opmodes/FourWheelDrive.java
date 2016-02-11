@@ -36,7 +36,12 @@ public class FourWheelDrive extends OpMode {
 
 
     final static double tapeDelta = .0025;
+    final static double triggerDelta = .0025;
+    double leftPosition = 0;
+    double rightPosition = 1;
     double tapePosition = 0;
+    boolean triggerLeft = false;
+    boolean triggerRight = false;
 
 
     /**
@@ -88,9 +93,10 @@ public class FourWheelDrive extends OpMode {
 
         colorSensor = hardwareMap.colorSensor.get("color_sensor");
 
-        trigger1.setPosition(0);
-        trigger2.setPosition(1);
+        trigger1.setPosition(leftPosition);
+        trigger2.setPosition(rightPosition);
         dropper.setPosition(1);
+        tapeAngle.setPosition(.45);
 
     }
 
@@ -161,18 +167,7 @@ public class FourWheelDrive extends OpMode {
             tapeExt2.setPower(gamepad2.right_stick_y * 0);
         }
 
-        if (gamepad1.b) {
-            trigger2.setPosition(.25);
-        }
 
-        if (gamepad1.y) {
-            trigger1.setPosition(0);
-            trigger2.setPosition(1);
-        }
-
-        if (gamepad1.x) {
-            trigger1.setPosition(.6);
-        }
 
         if (gamepad2.right_bumper) {
             dropper.setPosition(0);
@@ -182,9 +177,39 @@ public class FourWheelDrive extends OpMode {
             dropper.setPosition(1);
         }
 
+        if(gamepad1.b){
+            triggerLeft = true;
+            triggerRight = false;
+        }
 
+        if(gamepad1.x){
+            triggerLeft = false;
+            triggerRight = true;
+        }
 
+        if(triggerLeft==true){
+            if(gamepad1.left_bumper){
+                leftPosition -= triggerDelta;
+            }
+            if(gamepad1.right_bumper){
+                leftPosition += triggerDelta;
+            }
+        }
 
+        if(triggerRight==true){
+            if(gamepad1.left_bumper){
+                rightPosition += triggerDelta;
+            }
+            if(gamepad1.right_bumper){
+                rightPosition -= triggerDelta;
+            }
+        }
+
+        leftPosition = Range.clip(leftPosition, 0, 1);
+        rightPosition = Range.clip(rightPosition, 0, 1);
+
+        trigger1.setPosition(leftPosition);
+        trigger2.setPosition(rightPosition);
 
 
 		/*
